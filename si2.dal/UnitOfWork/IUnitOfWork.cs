@@ -11,6 +11,10 @@ namespace si2.dal.UnitOfWork
     {
         IDataflowRepository Dataflows { get; }
 
+
+        IProgramRepository Program { get; }
+
+
         Task<int> SaveChangesAsync(CancellationToken ct);
 
         int SaveChanges();

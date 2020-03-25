@@ -17,5 +17,12 @@ namespace si2.common
             Ongoing = 2,
             Completed = 3
         }
+
+        public enum ProgramStatus
+        {
+            Started = 1,
+            Ongoing = 2,
+            Completed = 3
+        }
     }
 }
