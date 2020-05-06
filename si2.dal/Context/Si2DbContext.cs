@@ -36,6 +36,11 @@ namespace si2.dal.Context
 			
 		}
 
+		/*public Si2DbContext()
+		{
+			// Default constructor!
+		}*/
+
 		protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -75,7 +75,9 @@ namespace si2.dal.Repositories
 
         public virtual async Task DeleteAsync(TEntity entity, CancellationToken ct)
         {
-            await _db.Set<TEntity>().SingleDeleteAsync(entity);
+            //await _db.Set<TEntity>().SingleDeleteAsync(entity);
+            _db.Set<TEntity>().Remove(entity);
+
         }
 
         public virtual TEntity Update(TEntity t, object key, byte[] rowVersion = null)
@@ -99,8 +101,8 @@ namespace si2.dal.Repositories
             TEntity exist = await _db.Set<TEntity>().FindAsync(key);
             if (exist != null)
             {
-                if (rowVersion != null)
-                    _db.Entry(exist).OriginalValues["RowVersion"] = rowVersion;
+                //if (rowVersion != null)
+                   // _db.Entry(exist).OriginalValues["RowVersion"] = rowVersion;
                 _db.Entry(exist).CurrentValues.SetValues(t);
             }
         }

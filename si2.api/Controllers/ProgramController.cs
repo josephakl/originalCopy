@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-//using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using si2.bll.Dtos.Requests.Program;
 using si2.bll.Dtos.Results.Program;
@@ -21,72 +21,25 @@ using System.Collections;
 namespace si2.api.Controllers
 {
     [ApiController]
-    //[Route("api/program")]
-    [Route("[controller]")]
-    //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Route("api/program")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
     public class ProgramController : ControllerBase
     {
-        // private readonly LinkGenerator _linkGenerator;
-        private readonly Microsoft.Extensions.Logging.ILogger<ProgramController> _logger;
-        // private readonly IProgramService _programService;
-        private string [] currentPrograms = null;
 
-        /*public ProgramController(LinkGenerator linkGenerator, Microsoft.Extensions.Logging.ILogger<ProgramController> logger, IProgramService programService)
+        private readonly LinkGenerator _linkGenerator;
+        private readonly ILogger<ProgramController> _logger;
+        private readonly IProgramService _programService;
+
+        public ProgramController(LinkGenerator linkGenerator, ILogger<ProgramController> logger, IProgramService programService)
         {
             _linkGenerator = linkGenerator;
             _logger = logger;
             _programService = programService;
-        }*/
-
-        public ProgramController(Microsoft.Extensions.Logging.ILogger<ProgramController> logger)
-        {
-            _logger = logger;
-            currentPrograms = new [] {
-
-                "Informatique Appliquée aux Entreprises",
-                "Marketing et Publicité",
-                "Management Hôtlier et Arts Culinaires"
-           };
         }
 
 
-        // Request list of current programs data 
-       /* [HttpGet]
-        public string Get()
-        {
-            Console.WriteLine("Current List of Programs :");
-
-            /* for (int p = 0; p < currentPrograms.Count; p++)
-             {
-
-                  Console.WriteLine("-" + currentPrograms[p]);
-
-              }
-              return null;
-            //return currentPrograms.ToArray().ToString();
-
-            //PrintPrograms(currentPrograms);
-
-            return currentPrograms.ToString();
-
-        }*/
-
-        [HttpGet]
-        public IEnumerable<Programs> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 3).Select(index => new Programs
-            {
-                Date = DateTime.Now.AddDays(index),
-                range = rng.Next(0, 10),
-                title = currentPrograms[rng.Next(currentPrograms.Length)]
-            })
-            .ToArray();
-        }
-
-
-
-        /*[HttpPost]
+        [HttpPost]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProgramDto))]
@@ -190,7 +143,7 @@ namespace si2.api.Controllers
             switch (type)
             {
                 case Enums.ResourceUriType.PreviousPage:
-                    return _linkGenerator.GetUriByName(this.HttpContext, "GetProgram",
+                    return _linkGenerator.GetUriByName(this.HttpContext, "GetPrograms",
                         new
                         {
                             status = pagedResourceParameters.Status,
@@ -199,7 +152,7 @@ namespace si2.api.Controllers
                             pageSize = pagedResourceParameters.PageSize
                         });
                 case Enums.ResourceUriType.NextPage:
-                    return _linkGenerator.GetUriByName(this.HttpContext, "GetProgram",
+                    return _linkGenerator.GetUriByName(this.HttpContext, "GetPrograms",
                         new
                         {
                             status = pagedResourceParameters.Status,
@@ -208,7 +161,7 @@ namespace si2.api.Controllers
                             pageSize = pagedResourceParameters.PageSize
                         });
                 default:
-                    return _linkGenerator.GetUriByName(this.HttpContext, "GetProgram",
+                    return _linkGenerator.GetUriByName(this.HttpContext, "GetPrograms",
                        new
                        {
                            status = pagedResourceParameters.Status,
@@ -220,6 +173,6 @@ namespace si2.api.Controllers
 
 
         }
-    }*/
     }
+    
 }

@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace si2.api.Controllers
 {
@@ -55,8 +56,10 @@ namespace si2.api.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout(CancellationToken ct)
         {
+            //HttpContext.Session.Clear();
             await _signInManager.SignOutAsync();
             return Ok();
+            //return Redirect("~/web/logout.html");
         }
 
         [HttpPost]
@@ -71,7 +74,11 @@ namespace si2.api.Controllers
                 {
                     var userClaims = await _userManager.GetClaimsAsync(user);
                     var userRoles = await _userManager.GetRolesAsync(user);
+
+                    //HttpContext.Session.SetString("JWToken", user.Email);
+
                     return Token(user, userClaims, userRoles);
+
                 }
                 else
                 {
@@ -108,15 +115,30 @@ namespace si2.api.Controllers
                 configIssuer,
                 configAudience,
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(30),
+                //expires: DateTime.UtcNow.AddMinutes(30),
+                //expires: DateTime.UtcNow.AddMinutes(1),
+                //expires: DateTime.Now.AddMinutes(1),
+                //
+                expires: new DateTimeOffset(DateTime.Now.AddMinutes(1)).DateTime,
+                notBefore: new DateTimeOffset(DateTime.Now).DateTime,
+                //
                 signingCredentials: creds
             );
 
-            var results = new
+
+
+            //
+           var results = new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration = token.ValidTo
             };
+
+           /* var token = new JwtSecurityTokenHandler().WriteToken(token);
+            return new CreatedResult("",token);*/
+
+           //HttpContext.Session.SetString("JWToken", results);
+
 
             return new CreatedResult("", results);
         }

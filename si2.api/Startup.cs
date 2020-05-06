@@ -33,6 +33,19 @@ namespace si2.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /* Added by me
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddMvc();
+            */
+
+
             services.AddDbContextPool<Si2DbContext>((provider, options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Si2ConnectionString"));
@@ -76,7 +89,13 @@ namespace si2.api
                     {
                         ValidIssuer = Configuration.GetValue<string>("Si2JwtBearerConstants:Issuer"),
                         ValidAudience = Configuration.GetValue<string>("Si2JwtBearerConstants:Audience"),
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Si2JwtBearerConstants:Key")))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Si2JwtBearerConstants:Key"))),
+
+                        //
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                        //
                     };
                 });
 
@@ -128,6 +147,23 @@ namespace si2.api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            /* Added by me - Add User session
+            app.UseSession();
+            */
+        
+            /* Added by me - Add JWToken to all incoming HTTP Request Header
+            app.Use(async (context, next) =>
+            {
+                var JWToken = context.Session.GetString("JWToken");
+                if (!string.IsNullOrEmpty(JWToken))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+                }
+                await next();
+            });
+            */
+
             app.UseAuthentication();
             app.UseAuthorization();
 

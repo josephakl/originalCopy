@@ -17,7 +17,7 @@ namespace si2.bll.Services
 {
     public class ProgramService : ServiceBase, IProgramService
     {
-        public ProgramService(IUnitOfWork uow, IMapper mapper, ILogger<DataflowService> logger) : base(uow, mapper, logger)
+        public ProgramService(IUnitOfWork uow, IMapper mapper, ILogger<ProgramService> logger) : base(uow, mapper, logger)
         {
         }
 
@@ -82,7 +82,7 @@ namespace si2.bll.Services
         {
             ProgramDto programDto = null;
 
-            var programEntity = await _uow.Dataflows.GetAsync(id, ct);
+            var programEntity = await _uow.Program.GetAsync(id, ct);
             if (programEntity != null)
             {
                 programDto = _mapper.Map<ProgramDto>(programEntity);
@@ -141,7 +141,7 @@ namespace si2.bll.Services
 
         public async Task<bool> ExistsAsync(Guid id, CancellationToken ct)
         {
-            if (await _uow.Dataflows.GetAsync(id, ct) != null)
+            if (await _uow.Program.GetAsync(id, ct) != null)
                 return true;
 
             return false;
