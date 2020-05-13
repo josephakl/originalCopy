@@ -28,6 +28,8 @@ namespace si2.dal.UnitOfWork
         public IProgramRepository Program => _serviceProvider.GetService<IProgramRepository>();
 
 
+        public IFileDocumentRepository FileDocuments => _serviceProvider.GetService<IFileDocumentRepository>();
+
         public async Task<int> SaveChangesAsync(CancellationToken ct)
         {
             return await _db.SaveChangesAsync(ct);

@@ -76,6 +76,9 @@ namespace si2.api
             services.AddTransient<IDataflowService, DataflowService>();
             services.AddTransient<IProgramService, ProgramService>();
 
+            services.AddTransient<IFileDocumentRepository, FileDocumentRepository>();
+            services.AddTransient<IFileDocumentService, FileDocumentService>();
+
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
             IMapper mapper = mappingConfig.CreateMapper();

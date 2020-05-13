@@ -5,6 +5,7 @@ using si2.bll.Dtos.Requests.Program;
 using si2.bll.Dtos.Results.Program;
 using si2.bll.Helpers.PagedList;
 using si2.dal.Entities;
+using si2.bll.Dtos.Requests.FileUpload;
 
 namespace si2.bll.Helpers
 {
@@ -21,6 +22,8 @@ namespace si2.bll.Helpers
             CreateMap<UpdateProgramDto, Program>();
             CreateMap<Program, ProgramDto>();
             CreateMap<Program, UpdateProgramDto>();
+
+            CreateMap<FileUploadDto, FileDocument>();
 
         }
     }

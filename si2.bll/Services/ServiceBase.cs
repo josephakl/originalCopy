@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using si2.bll.Helpers.AutoMapper;
 using si2.dal.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace si2.bll.Services
     {
         protected readonly IUnitOfWork _uow;
         protected readonly IMapper _mapper;
+        //protected readonly IAutoMapperService _automapper;
         protected readonly ILogger<ServiceBase> _logger;
 
         public ServiceBase(IUnitOfWork uow, IMapper mapper, ILogger<ServiceBase> logger)

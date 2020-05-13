@@ -167,5 +167,18 @@ namespace si2.dal.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
+        public void Remove(TEntity entity)
+        {
+            _db.Set<TEntity>().Remove(entity);
+        }
+
+
+        public void Remove(object Id)
+        {
+            TEntity entity = _db.Set<TEntity>().Find(Id);
+            this.Remove(entity);
+        }
     }
 }

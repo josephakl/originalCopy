@@ -17,13 +17,16 @@ namespace si2.dal.Context
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<AuditEntry> AuditEntries { get; set; }
+
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; }
 
         public DbSet<Dataflow> Dataflows { get; set; }
 
-		public DbSet<Program> Program { get; set; } 
+		public DbSet<Program> Program { get; set; }
 
-        public DbSet<Vehicle> Vehicles { get; set; }
+		public DbSet<FileDocument> FileDocuments { get; set; }
+
+		public DbSet<Vehicle> Vehicles { get; set; }
 
         public Si2DbContext(DbContextOptions<Si2DbContext> options) : base(options)
         {

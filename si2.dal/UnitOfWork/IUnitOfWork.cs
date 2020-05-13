@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace si2.dal.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IDataflowRepository Dataflows { get; }
 
-
         IProgramRepository Program { get; }
 
+        IFileDocumentRepository FileDocuments { get; }
 
         Task<int> SaveChangesAsync(CancellationToken ct);
 
